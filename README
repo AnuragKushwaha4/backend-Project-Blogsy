@@ -31,13 +31,19 @@ Key Features & Learnings
 
         Enhanced project scalability by organizing logic into reusable modules.
 
-    Authentication & Authorization:
+   
 
-        Implemented user authentication using sessions or JWT.
+    Authentication, Authorization & Security:
 
-        Developed role-based access control for secure user management.
+        Implemented JWT-based authentication for secure API access.
 
-        Integrated login and logout functionalities.
+        Used cookies and sessions for user state management.
+
+        Applied role-based access control for admin and user permissions.
+
+        Secured passwords with bcrypt hashing before storing in the database.
+
+        Handled login, logout, and protected routes efficiently.
 
     Database Operations (CRUD):
 
