@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+    <div class="w-full min-h-screen bg-zinc-900 text-white pb-5 ">
+        <div class="w-full flex justify-between bg-gradient-to-b from-zinc-800 via-zinc-900 to-zinc-950 p-3 mb-4  ">
+            <h1 class="text-3xl text-blue-500 font-[Pacifico]">Blogsy.com</h1>
+            <a href="/first" class="text-blue-500 font-[Pacifico] text-xl">Home</a>
+            <a href="/logout" class="bg-red-600 mt-2  px-3 py-2 ">Logout</a>
+        </div>
+        <div class="w-full  flex">
+            <div class="h-40 w-[10%] mr-3 rounded-md bg-blue-500">
+                <a class="text-blue-500" href="/change"><img class="w-full h-full object-cover overflow-hidden"
+                        src="/images/uploads/<%= user.profileImage %>"></a>
+            </div>
+            <div class="flex justify-between w-full">
+                <div>
+                    <h1 class="font-bold font-Merriweather text-3xl mb-2">Hello</h1>
+                    <h1 class="ml-5 font-bold text-2xl">
+                        <%= user.name %> Welcomes You✌️
+                    </h1>
+                </div>
+
+                <div class="flex gap-x-[200px] pr-[350px] mt-5  text-blue-500 text-xl font-Merriweather font-bold">
+                    <div class="flex flex-col items-center">
+                        <h1><%= user.followers.length%></h1>
+                        <h1>Followers</h1>
+                    </div>
+                    <div class="flex flex-col items-center">
+                        <h1><%= user.followings.length%></h1>
+                        <h1>Following</h1>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class=" mt-5">
+            <a class="<%= (user.followers.indexOf(loggedinuser._id)===-1) ? 'bg-blue-500 text-white px-6 py-2 mt-5 rounded-md' : 'bg-transparent border border-blue-500 text-blue-500 px-6 py-2 mt-5 rounded-md' %>" href="/follow/<%=user._id%>"><%= (user.followers.indexOf(loggedinuser._id)===-1)?"follow":"following"%></a>
+        </div>
+
+        <div class="yourpost w-full mt-16">
+            <h1 class="mb-4 font-bold font-Merriweather text-2xl"><%= user.name%>'s posts</h1>
+
+            <% if(user.post.length>0){ %>
+                <% user.post.reverse().forEach((p)=>{ %>
+                    <div class="border-2 px-3 py-2 w-2/3 mt-3 border-zinc-800 bg-zinc-700">
+                        <a href=""><h2 class="text-blue-500 text-xl">@<%= user.username%>
+                        </h2></a>
+                        <p>
+                            <%= p.content %>
+                        </p>
+                        <div class="flex justify-between mt-5 text-xl">
+                            <a href="/like/<%= p._id %>" class=" text-blue-500">
+                                <%= p.likes.length%>
+                                    <%= p.likes.indexOf(loggedinuser._id)===-1?"Like":"Liked"%>
+                            </a>
+                            <a class="text-zinc-900  font-bold" href="/edit/<%= p._id%>">
+                                <%= String(p.user)==String(loggedinuser._id)?"Edit":""%>
+                            </a>
+                        </div>
+                    </div>
+                    <% }) %>
+                        <% } else{ %>
+                            <h1 class="text-zinc-700">No Post Yet</h1>
+                            <% } %>
+        </div>
+    </div>
+</body>
+
+</html>
