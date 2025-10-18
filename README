@@ -9,3 +9,5 @@ This project is created for learning backend Concepts and through this Project I
 1. API creation , Dynamic API creation
 2. Learned about middlewares and Modules and other basic Backend Technologies
 3. Understand and implement Authentication Autherization and and perform task like Role Based Access, Login, Logout. 
+4. Perform CRUD operations ,Data Associations 
+5. Handle Uploading file through MULTER.
