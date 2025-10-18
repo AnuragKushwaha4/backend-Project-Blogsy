@@ -56,3 +56,22 @@ Key Features & Learnings
         Implemented file upload functionality using Multer.
 
         Managed file storage and validation efficiently.
+    
+
+    Security Highlights
+
+        JWT authentication
+
+        Cookie-based session management
+
+        Encrypted passwords using bcrypt
+
+        Role-based access system
+
+        Secure API routes and middleware protection
+
+
+    Purpose
+
+This project was built purely for learning and skill development.
+It helped me gain practical experience in backend logic design, API security, authentication, and database integration — strengthening my foundation in backend engineering.
