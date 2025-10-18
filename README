@@ -1,0 +1,11 @@
+This is my First backend Project Created using TechStack:
+NodeJS
+ExpressJs
+MongoDB
+EJS
+Tailwind
+
+This project is created for learning backend Concepts and through this Project I handled various Backend Task like
+1. API creation , Dynamic API creation
+2. Learned about middlewares and Modules and other basic Backend Technologies
+3. Understand and implement Authentication Autherization and and perform task like Role Based Access, Login, Logout. 
