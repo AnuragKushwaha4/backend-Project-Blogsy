@@ -1,42 +1,98 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Blogsy · Create Account</title>
 
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            brand: ['Pacifico', 'cursive'],
+            ui: ['Inter', 'sans-serif']
+          },
+          colors: {
+            primary: '#1D9BF0'
+          }
+        }
+      }
+    }
+  </script>
 </head>
 
-<body>
-    <h1 class="block text-4xl text-blue-500 font-[Pacifico] p-5 bg-zinc-900 ">Blogsy.com</h1>
-    <div class="w-full min-h-screen bg-zinc-900 text-white flex justify-center items-center">
-        <div class=" flex flex-col items-center gap-3 w-1/3 border-2 border-zinc-800 p-4 rounded-md ">
-            <h1 class="text-3xl font-bold  mb-4 font-Merriweather"> Create Account</h1>
+<body class="font-ui bg-gradient-to-br from-[#0B0F19] to-[#020617] min-h-screen text-white">
 
-            <form class=" flex flex-col gap-3 w-full " action="/register" method="post">
-                <input class="px-3 py-2 outline-none bg-transparent border-2 border-zinc-800 rounded-md" type="text"
-                    placeholder="Name" name="name">
-                <input class="px-3 py-2 outline-none bg-transparent border-2 border-zinc-800 rounded-md" type="text"
-                    placeholder="Username" name="username">
-                <input class="px-3 py-2 outline-none bg-transparent border-2 border-zinc-800 rounded-md" type="text"
-                    placeholder="Email" name="email">
-                <input class="px-3 py-2 outline-none bg-transparent border-2 border-zinc-800 rounded-md" type="text"
-                    placeholder="Password" name="password">
-                <input class="px-3 py-2 outline-none bg-transparent border-2 border-zinc-800 rounded-md" type="number"
-                    name="age" placeholder="Age">
-                <input class="px-5 mt-3 py-2 outline-none bg-blue-500 border-2 border-zinc-800 rounded-md" type="submit"
-                    value="Create Account">
-            </form>
-            <h1 class="m-3 font-Merriweather text-zinc-600">or</h1>
-            <a href="/login" class="w-full text-center mb-5 py-2 outline-none bg-orange-500 border-2 border-zinc-800 rounded-md">
-  Login
-</a>
+  <!-- Navbar -->
+  <nav class="w-full px-10 py-6 flex justify-between items-center">
+    <h1 class="text-3xl font-brand text-primary tracking-wide">
+      Blogsy
+    </h1>
+    <a href="/login" class="text-sm text-zinc-400 hover:text-primary transition">
+      Already have an account?
+    </a>
+  </nav>
 
-        </div>
+  <!-- Main -->
+  <main class="flex justify-center items-center px-4">
+    <div class="w-full max-w-md bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-8 shadow-2xl">
+
+      <h2 class="text-3xl font-semibold text-center mb-2">
+        Create your account
+      </h2>
+      <p class="text-center text-zinc-400 text-sm mb-6">
+        Share thoughts. Connect with people.
+      </p>
+
+      <form action="/register" method="post" class="flex flex-col gap-4">
+
+        <input
+          class="bg-transparent border border-white/10 focus:border-primary rounded-xl px-4 py-3 outline-none transition"
+          type="text" name="name" placeholder="Full Name" />
+
+        <input
+          class="bg-transparent border border-white/10 focus:border-primary rounded-xl px-4 py-3 outline-none transition"
+          type="text" name="username" placeholder="Username" />
+
+        <input
+          class="bg-transparent border border-white/10 focus:border-primary rounded-xl px-4 py-3 outline-none transition"
+          type="email" name="email" placeholder="Email address" />
+
+        <input
+          class="bg-transparent border border-white/10 focus:border-primary rounded-xl px-4 py-3 outline-none transition"
+          type="password" name="password" placeholder="Password" />
+
+        <input
+          class="bg-transparent border border-white/10 focus:border-primary rounded-xl px-4 py-3 outline-none transition"
+          type="number" name="age" placeholder="Age" />
+
+        <button
+          type="submit"
+          class="mt-2 bg-primary hover:bg-blue-600 transition rounded-xl py-3 font-medium tracking-wide shadow-lg">
+          Create Account
+        </button>
+      </form>
+
+      <div class="flex items-center my-6">
+        <div class="flex-grow h-px bg-white/10"></div>
+        <span class="mx-3 text-zinc-400 text-sm">or</span>
+        <div class="flex-grow h-px bg-white/10"></div>
+      </div>
+
+      <a
+        href="/login"
+        class="block text-center py-3 rounded-xl border border-white/10 hover:bg-white/5 transition">
+        Login instead
+      </a>
+
     </div>
-</body>
+  </main>
 
+</body>
 </html>

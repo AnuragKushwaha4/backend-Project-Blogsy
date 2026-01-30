@@ -1,21 +1,78 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Edit Post · Blogsy</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            ui: ['Inter']
+          },
+          colors: {
+            primary: '#1D9BF0',
+            warning: '#FACC15'
+          }
+        }
+      }
+    }
+  </script>
 </head>
-<body>
-    <div class="w-full min-h-screen bg-zinc-900 text-white  p-5 ">
-        <div class="CreatePost">
-            <h1 class="mb-2 font-bold font-Merriweather text-2xl">Edit Post</h1>
-            <form action="/edit/<%= post._id%>" method="post">
-                <textarea name="content"
-                    class="resize-none p-4 w-2/3 h-40 border-2 border-zinc-800 bg-transparent rounded-md block"><%= post.content %></textarea>
-                <input type="submit" value="Update" class="mt-4 bg-yellow-500 px-3 py-2 block">
-            </form>
-        </div>
-    </div>
+
+<body class="bg-gradient-to-br from-[#0B0F19] to-[#020617] text-white font-ui min-h-screen">
+
+<!-- MAIN -->
+<main class="flex min-h-screen justify-center items-center px-4">
+  <div class="w-full max-w-2xl bg-white/5 backdrop-blur-xl
+              border border-white/10 rounded-2xl
+              p-8 shadow-2xl">
+
+    <h1 class="text-3xl font-semibold mb-1">Edit Post</h1>
+    <p class="text-zinc-400 text-sm mb-6">
+      Update your thoughts before sharing again
+    </p>
+
+    <form action="/edit/<%= post._id %>" method="post">
+
+      <textarea
+        name="content"
+        rows="6"
+        class="w-full resize-none bg-transparent
+               border border-white/10 rounded-xl
+               px-4 py-3 outline-none
+               focus:border-primary transition
+               text-zinc-200"
+        required><%= post.content %></textarea>
+
+      <div class="flex justify-end gap-3 mt-6">
+
+        <a href="/first"
+           class="px-5 py-2 rounded-full
+                  border border-white/10
+                  text-zinc-400 hover:text-white transition">
+          Cancel
+        </a>
+
+        <button
+          type="submit"
+          class="bg-yellow-400 hover:bg-yellow-500
+                 text-black px-6 py-2 rounded-full
+                 font-medium transition
+                 active:scale-95">
+          Update
+        </button>
+
+      </div>
+    </form>
+
+  </div>
+</main>
+
 </body>
 </html>
