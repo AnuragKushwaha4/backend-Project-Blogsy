@@ -6,8 +6,6 @@
   <title><%= user.name %> · Blogsy</title>
 
   <script src="https://cdn.tailwindcss.com"></script>
-
-  <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
   <script>
@@ -42,7 +40,7 @@
   </div>
 </header>
 
-<!-- PROFILE -->
+<!-- PROFILE HEADER -->
 <section class="max-w-6xl mx-auto px-6 mt-10">
   <div class="flex flex-col md:flex-row gap-8 items-center md:items-start">
 
@@ -73,16 +71,16 @@
       </div>
     </div>
 
-    <!-- Follow Button -->
+    <!-- FOLLOW BUTTON (FIXED) -->
     <div class="mt-4 md:mt-0">
       <a
         href="/follow/<%= user._id %>"
-        class="<%= user.followers.indexOf(loggedinuser._id)===-1
+        class="<%= user.followers.indexOf(user._id) === -1
           ? 'bg-primary text-white'
           : 'border border-primary text-primary' %>
         px-6 py-2 rounded-full font-medium
         transition transform hover:scale-105 active:scale-95">
-        <%= user.followers.indexOf(loggedinuser._id)===-1 ? 'Follow' : 'Following' %>
+        <%= user.followers.indexOf(user._id) === -1 ? 'Follow' : 'Following' %>
       </a>
     </div>
 
@@ -113,14 +111,14 @@
           <a href="/like/<%= p._id %>"
              class="flex items-center gap-2 text-primary
                     hover:scale-105 transition active:scale-95">
-            <span class="<%= p.likes.indexOf(loggedinuser._id)!==-1 ? 'text-red-500' : '' %>">
+            <span class="<%= p.likes.indexOf(user._id)!==-1 ? 'text-red-500' : '' %>">
               ❤️
             </span>
             <%= p.likes.length %>
-            <%= p.likes.indexOf(loggedinuser._id)===-1 ? 'Like' : 'Liked' %>
+            <%= p.likes.indexOf(user._id)===-1 ? 'Like' : 'Liked' %>
           </a>
 
-          <% if(String(p.user) === String(loggedinuser._id)){ %>
+          <% if(String(p.user) === String(user._id)){ %>
             <a href="/edit/<%= p._id %>"
                class="text-zinc-400 hover:text-white transition">
               Edit
