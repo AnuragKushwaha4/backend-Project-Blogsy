@@ -38,4 +38,10 @@ async function Login(req,res){
     })
 
 }
-modules.exports ={Register,Login};
+
+async function Logout(req,res){
+    if(!req.cookies.token)return res.render("Login");
+    res.cookie("token","");
+    res.render("Login");
+}
+modules.exports ={Register,Login,Logout};
