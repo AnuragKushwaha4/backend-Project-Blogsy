@@ -29,9 +29,6 @@ app.use(express.static(path.join(__dirname,"public")))
 //     }
 // }
 
-app.get("/login",(req,res)=>{
-    res.render("Login");
-})
 
 
 app.get("/edit/:id",isloggedin,async(req,res)=>{
@@ -162,12 +159,22 @@ app.get("/viewing/:email",isloggedin,async(req,res)=>{
     else res.render("visitprofile",{user,loggedinuser});
 })
 
+app.get("/first",isloggedin,async(req,res)=>{
+    let posts=await userpost.find().populate("user");
+    let user= await usermodel.findOne({email:req.user.email});
+    res.render("first",{posts,user})
+})
+
+
+
 app.get("/logout",async (req,res)=>{
     console.log("before",req.cookies.token);
     res.cookie("token","");
     console.log(req.cookies.token);
     res.redirect("/login");
 })
+
+
 app.post("/login",async(req,res)=>{
     let {email,password}=req.body;
 
@@ -188,11 +195,12 @@ app.post("/login",async(req,res)=>{
     })
 })
 
-app.get("/first",isloggedin,async(req,res)=>{
-    let posts=await userpost.find().populate("user");
-    let user= await usermodel.findOne({email:req.user.email});
-    res.render("first",{posts,user})
+
+
+app.get("/login",(req,res)=>{
+    res.render("Login");
 })
+
 
 app.post("/register", async(req,res)=>{
    let {email,password,username,name,age}=req.body;
