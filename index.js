@@ -6,7 +6,7 @@ const jwt=require("jsonwebtoken");
 const userpost = require("./Models/userpost");
 const upload=require("./Config/multer");
 const path=require("path");
-const { log } = require("console");
+const {isloggedin}=require("./Middleware/authorization")
 
 const app=express();
 app.use(express.json());
@@ -17,17 +17,17 @@ app.use(express.static(path.join(__dirname,"public")))
 
 
 
-const isloggedin=(req,res,next)=>{
-    if(!req.cookies.token){
-        res.status(500).render("Login");
-    }
-    else{
-        const data = jwt.verify(req.cookies.token,"secret");
-        req.user= data;
-        console.log(req.user);
-        next();
-    }
-}
+//const isloggedin=(req,res,next)=>{
+//     if(!req.cookies.token){
+//         res.status(500).render("Login");
+//     }
+//     else{
+//         const data = jwt.verify(req.cookies.token,"secret");
+//         req.user= data;
+//         console.log(req.user);
+//         next();
+//     }
+// }
 
 app.get("/login",(req,res)=>{
     res.render("Login");
@@ -39,6 +39,14 @@ app.get("/edit/:id",isloggedin,async(req,res)=>{
     res.render("edit",{post:post});
 
 })
+app.post("/edit/:id",isloggedin,async(req,res)=>{
+    await userpost.findOneAndUpdate({_id:req.params.id},{content:req.body.content},{new:true});
+    await user.save();
+    res.redirect("/profile");
+})
+
+
+
 app.get("/change",(req,res)=>{
     res.render("imageUpdate");
 })
@@ -50,11 +58,7 @@ app.post("/upload",isloggedin,upload.single("image"),async (req,res)=>{
     res.redirect("profile")
     
 })
-app.post("/edit/:id",isloggedin,async(req,res)=>{
-    await userpost.findOneAndUpdate({_id:req.params.id},{content:req.body.content},{new:true});
-    await user.save();
-    res.redirect("/profile");
-})
+
 
 app.post('/post',isloggedin,async (req,res)=>{
     const user=await usermodel.findOne({email:req.user.email});
