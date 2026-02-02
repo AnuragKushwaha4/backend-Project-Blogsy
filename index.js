@@ -44,21 +44,6 @@ app.post("/edit/:id",isloggedin,async(req,res)=>{
     res.redirect("/profile");
 })
 
-
-
-app.get("/change",(req,res)=>{
-    res.render("imageUpdate");
-})
-
-app.post("/upload",isloggedin,upload.single("image"),async (req,res)=>{
-    let user= await usermodel.findOne({email:req.user.email});
-    user.profileImage = req.file.filename;
-    await user.save();
-    res.redirect("profile")
-    
-})
-
-
 app.post('/post',isloggedin,async (req,res)=>{
     const user=await usermodel.findOne({email:req.user.email});
     let {content}=req.body;
@@ -87,6 +72,26 @@ app.post('/post1',isloggedin,async (req,res)=>{
     res.redirect("/first")
 
 })
+
+
+
+
+
+
+app.get("/change",(req,res)=>{
+    res.render("imageUpdate");
+})
+
+app.post("/upload",isloggedin,upload.single("image"),async (req,res)=>{
+    let user= await usermodel.findOne({email:req.user.email});
+    user.profileImage = req.file.filename;
+    await user.save();
+    res.redirect("profile")
+    
+})
+
+
+
 
 app.get("/like1/:id",isloggedin,async(req,res)=>{
     let post=await userpost.findOne({_id:req.params.id});
