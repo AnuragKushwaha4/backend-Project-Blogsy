@@ -23,11 +23,11 @@ async function Register(req,res){
 
 async function Login(req,res){
     let {email,password}=req.body;
-    let loginuser = await usermodel.findOne({email:email,});
+    let user = await usermodel.findOne({email:email,});
 
-    if(!loginuser)return res.status(500).render("Login");
+    if(!user)return res.status(500).render("Login");
 
-    bcrypt.compare(password,loginuser.password,async (err,result)=>{
+    bcrypt.compare(password,user.password,async (err,result)=>{
         if(!result)return res.status(500).render("Login");
 
         let token = jwt.sign({email,password},"secret");
@@ -44,4 +44,4 @@ async function Logout(req,res){
     res.cookie("token","");
     res.render("Login");
 }
-modules.exports ={Register,Login,Logout};
+module.exports ={Register,Login,Logout};
