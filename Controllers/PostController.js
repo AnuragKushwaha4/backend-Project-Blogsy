@@ -2,9 +2,9 @@ const usermodel = require("../Models/usermodel")
 const userpost = require("../Models/userpost")
 
 async function EditPost(req,res){
-    await userpost.findOneandUpdate({_id:req.params.id},{content:req.body.content},{new:true});
-    await userpost.save();
-    res.ridirect("/profile");
+    await userpost.findOneAndUpdate({_id:req.params.id},{content:req.body.content},{new:true});
+    //await userpost.save();
+    res.redirect("/profile");
 }
 
 async function NewPost(req,res){
@@ -35,4 +35,25 @@ async function NewPost1(req,res){
         user.post.push(newpost._id);
         await user.save();
         res.redirect("/first")
+}
+
+async function LikePost(req,res){
+    let post = await userpost.findOne({_id:req.params.id});
+    await post.populate("user");
+
+    if(post.likes.indexOf(req.user.userid)===-1)post.likes.push(req.user.userid);
+    else post.likes.splice(req.user.userid,1);
+    await post.save();
+    if(post.user.email===req.user.email)res.redirect("/profile");
+    req.redirect(`/viewing/${post.user.email}`)
+}
+
+async function LikePost1(req,res){
+    let post = await userpost.findOne({_id:req.params.id});
+    await post.populate("user");
+
+    if(post.likes.indexOf(req.user.userid)===-1)post.likees.push(req.likes.push(req.user.userid));
+    else post.likes.splice(req.user.userid,1);
+    await post.save();
+    res.redirect("/first");
 }

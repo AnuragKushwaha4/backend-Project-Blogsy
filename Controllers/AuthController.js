@@ -30,7 +30,7 @@ async function Login(req,res){
     bcrypt.compare(password,user.password,async (err,result)=>{
         if(!result)return res.status(500).render("Login");
 
-        let token = jwt.sign({email,password},"secret");
+        let token = jwt.sign({email:email,userid:user._id},"secret");
 
         res.cookie("token",token);
         let posts=await userpost.find().populate("user");       
