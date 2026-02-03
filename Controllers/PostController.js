@@ -45,14 +45,14 @@ async function LikePost(req,res){
     else post.likes.splice(req.user.userid,1);
     await post.save();
     if(post.user.email===req.user.email)res.redirect("/profile");
-    req.redirect(`/viewing/${post.user.email}`)
+    res.redirect(`/viewing/${post.user.email}`)
 }
 
 async function LikePost1(req,res){
     let post = await userpost.findOne({_id:req.params.id});
     await post.populate("user");
 
-    if(post.likes.indexOf(req.user.userid)===-1)post.likees.push(req.likes.push(req.user.userid));
+    if(post.likes.indexOf(req.user.userid)===-1)post.likes.push(req.user.userid);
     else post.likes.splice(req.user.userid,1);
     await post.save();
     res.redirect("/first");

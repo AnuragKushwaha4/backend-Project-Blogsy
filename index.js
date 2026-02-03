@@ -19,7 +19,7 @@ app.use(express.static(path.join(__dirname,"public")))
 
 
 app.use("/auth",authRoute)
-app.use("/post",isloggedin,postRoute)
+app.use("/posts",isloggedin,postRoute)
 //const isloggedin=(req,res,next)=>{
 //     if(!req.cookies.token){
 //         res.status(500).render("Login");
