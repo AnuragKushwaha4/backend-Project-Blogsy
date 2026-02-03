@@ -101,7 +101,7 @@
 
         <div class="flex justify-between items-center mt-4 text-sm">
 
-          <a href="/like/<%= p._id %>" class="text-primary hover:underline">
+          <a href="/posts/like/<%= p._id %>" class="text-primary hover:underline">
             ❤️ <%= p.likes.length %>
             <%= p.likes.indexOf(loggedinuser._id)===-1 ? 'Like' : 'Liked' %>
           </a>

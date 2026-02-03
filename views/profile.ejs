@@ -108,7 +108,7 @@
 
         <div class="flex justify-between items-center mt-4 text-sm">
 
-          <a href="/like/<%= p._id %>"
+          <a href="/posts/like/<%= p._id %>"
              class="flex items-center gap-2 text-primary
                     hover:scale-105 transition active:scale-95">
             <span class="<%= p.likes.indexOf(user._id)!==-1 ? 'text-red-500' : '' %>">
