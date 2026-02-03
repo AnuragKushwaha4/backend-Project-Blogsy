@@ -8,7 +8,7 @@ const upload=require("./Config/multer");
 const path=require("path");
 const {isloggedin}=require("./Middleware/authorization")
 const authRoute=require('./Routes/AuthRoute')
-
+const postRoute = require("./Routes/PostRoute")
 
 const app=express();
 app.use(express.json());
@@ -19,6 +19,7 @@ app.use(express.static(path.join(__dirname,"public")))
 
 
 app.use("/auth",authRoute)
+app.use("/post",isloggedin,postRoute)
 //const isloggedin=(req,res,next)=>{
 //     if(!req.cookies.token){
 //         res.status(500).render("Login");
@@ -38,40 +39,40 @@ app.get("/edit/:id",isloggedin,async(req,res)=>{
     res.render("edit",{post:post});
 
 })
-app.post("/edit/:id",isloggedin,async(req,res)=>{
-    await userpost.findOneAndUpdate({_id:req.params.id},{content:req.body.content},{new:true});
-    await user.save();
-    res.redirect("/profile");
-})
+// app.post("/edit/:id",isloggedin,async(req,res)=>{
+//     await userpost.findOneAndUpdate({_id:req.params.id},{content:req.body.content},{new:true});
+//     await user.save();
+//     res.redirect("/profile");
+// })
 
-app.post('/post',isloggedin,async (req,res)=>{
-    const user=await usermodel.findOne({email:req.user.email});
-    let {content}=req.body;
+// app.post('/post',isloggedin,async (req,res)=>{
+//     const user=await usermodel.findOne({email:req.user.email});
+//     let {content}=req.body;
 
-    let newpost = await userpost.create({
-        user:user._id,
-        content:content
-    })
+//     let newpost = await userpost.create({
+//         user:user._id,
+//         content:content
+//     })
 
-    user.post.push(newpost._id);
-    await user.save();
-    res.redirect("/profile")
+//     user.post.push(newpost._id);
+//     await user.save();
+//     res.redirect("/profile")
 
-})
-app.post('/post1',isloggedin,async (req,res)=>{
-    const user=await usermodel.findOne({email:req.user.email});
-    let {content}=req.body;
+// })
+// app.post('/post1',isloggedin,async (req,res)=>{
+//     const user=await usermodel.findOne({email:req.user.email});
+//     let {content}=req.body;
 
-    let newpost = await userpost.create({
-        user:user._id,
-        content:content
-    })
+//     let newpost = await userpost.create({
+//         user:user._id,
+//         content:content
+//     })
 
-    user.post.push(newpost._id);
-    await user.save();
-    res.redirect("/first")
+//     user.post.push(newpost._id);
+//     await user.save();
+//     res.redirect("/first")
 
-})
+// })
 
 
 
@@ -93,24 +94,24 @@ app.post("/upload",isloggedin,upload.single("image"),async (req,res)=>{
 
 
 
-app.get("/like1/:id",isloggedin,async(req,res)=>{
-    let post=await userpost.findOne({_id:req.params.id});
-    if(post.likes.indexOf(req.user.userid)===-1)post.likes.push(req.user.userid);
-    else post.likes.splice(post.likes.indexOf(req.user.userid),1);
-    await post.save();
-    res.redirect("/first");
-})
-app.get("/like/:id",isloggedin,async(req,res)=>{
-    let post=await userpost.findOne({_id:req.params.id});
-    await post.populate("user");
-    if(post.likes.indexOf(req.user.userid)===-1)post.likes.push(req.user.userid);
-    else post.likes.splice(post.likes.indexOf(req.user.userid),1);
-    await post.save();
-    console.log(post.user.email);
-    console.log(req.user.email);
-    if(post.user.email===req.user.email)res.redirect('/profile');
-    else res.redirect(`/viewing/${post.user.email}`);
-})
+// app.get("/like1/:id",isloggedin,async(req,res)=>{
+//     let post=await userpost.findOne({_id:req.params.id});
+//     if(post.likes.indexOf(req.user.userid)===-1)post.likes.push(req.user.userid);
+//     else post.likes.splice(post.likes.indexOf(req.user.userid),1);
+//     await post.save();
+//     res.redirect("/first");
+// })
+// app.get("/like/:id",isloggedin,async(req,res)=>{
+//     let post=await userpost.findOne({_id:req.params.id});
+//     await post.populate("user");
+//     if(post.likes.indexOf(req.user.userid)===-1)post.likes.push(req.user.userid);
+//     else post.likes.splice(post.likes.indexOf(req.user.userid),1);
+//     await post.save();
+//     console.log(post.user.email);
+//     console.log(req.user.email);
+//     if(post.user.email===req.user.email)res.redirect('/profile');
+//     else res.redirect(`/viewing/${post.user.email}`);
+// })
 
 app.get("/follow/:id",isloggedin,async(req,res)=>{
     let loggedinuser = await usermodel.findOne({_id:req.user.userid});

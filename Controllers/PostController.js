@@ -57,3 +57,6 @@ async function LikePost1(req,res){
     await post.save();
     res.redirect("/first");
 }
+
+
+module.exports ={EditPost,NewPost,NewPost1,LikePost,LikePost1}
