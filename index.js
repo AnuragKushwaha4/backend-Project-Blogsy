@@ -9,6 +9,8 @@ const path=require("path");
 const {isloggedin}=require("./Middleware/authorization")
 const authRoute=require('./Routes/AuthRoute')
 const postRoute = require("./Routes/PostRoute")
+const userRoute = require("./Routes/UserRoute")
+
 
 const app=express();
 app.use(express.json());
@@ -20,7 +22,7 @@ app.use(express.static(path.join(__dirname,"public")))
 
 app.use("/auth",authRoute)
 app.use("/posts",isloggedin,postRoute)
-
+app.use("/users",isloggedin,userRoute)
 
 //const isloggedin=(req,res,next)=>{
 //     if(!req.cookies.token){
@@ -118,80 +120,77 @@ app.get('/',(req,res)=>{
 //     else res.redirect(`/viewing/${post.user.email}`);
 // })
 
-
-
-
-app.post("/upload",isloggedin,upload.single("image"),async (req,res)=>{
-    let user= await usermodel.findOne({email:req.user.email});
-    user.profileImage = req.file.filename;
-    await user.save();
-    res.redirect("profile")
+// app.post("/upload",isloggedin,upload.single("image"),async (req,res)=>{
+//     let user= await usermodel.findOne({email:req.user.email});
+//     user.profileImage = req.file.filename;
+//     await user.save();
+//     res.redirect("profile")
     
-})
+// })
 
 
-app.get("/follow/:id",isloggedin,async(req,res)=>{
-    let loggedinuser = await usermodel.findOne({_id:req.user.userid});
-    let user = await usermodel.findOne({_id:req.params.id}).populate("post"); 
-    if(loggedinuser.followings.indexOf(req.params.id)===-1){
-        loggedinuser.followings.push(user._id);
-        user.followers.push(loggedinuser._id);
-        await loggedinuser.save();
-        await user.save();
-    }
-    else{
-        loggedinuser.followings.splice(loggedinuser.followings.indexOf(user._id),1);
-        user.followers.splice(user.followers.indexOf(loggedinuser._id),1);
-        await loggedinuser.save();
-        await user.save();
-    }
-    console.log(`follow details: loggedin user: ${loggedinuser} , user: ${user}`);
-    res.render("visitprofile",{user,loggedinuser});
+// app.get("/follow/:id",isloggedin,async(req,res)=>{
+//     let loggedinuser = await usermodel.findOne({_id:req.user.userid});
+//     let user = await usermodel.findOne({_id:req.params.id}).populate("post"); 
+//     if(loggedinuser.followings.indexOf(req.params.id)===-1){
+//         loggedinuser.followings.push(user._id);
+//         user.followers.push(loggedinuser._id);
+//         await loggedinuser.save();
+//         await user.save();
+//     }
+//     else{
+//         loggedinuser.followings.splice(loggedinuser.followings.indexOf(user._id),1);
+//         user.followers.splice(user.followers.indexOf(loggedinuser._id),1);
+//         await loggedinuser.save();
+//         await user.save();
+//     }
+//     console.log(`follow details: loggedin user: ${loggedinuser} , user: ${user}`);
+//     res.render("visitprofile",{user,loggedinuser});
     
-})
-app.get("/follow1/:id",isloggedin,async(req,res)=>{
-    let loggedinuser = await usermodel.findOne({_id:req.user.userid});
-    let user = await usermodel.findOne({_id:req.params.id}).populate("post"); 
-    if(loggedinuser.followings.indexOf(req.params.id)===-1){
-        loggedinuser.followings.push(user._id);
-        user.followers.push(loggedinuser._id);
-        await loggedinuser.save();
-        await user.save();
-    }
-    else{
-        loggedinuser.followings.splice(loggedinuser.followings.indexOf(user._id),1);
-        user.followers.splice(user.followers.indexOf(loggedinuser._id),1);
-        await loggedinuser.save();
-        await user.save();
-    }
-    console.log(`follow details: loggedin user: ${loggedinuser} , user: ${user}`);
-    res.redirect("/first");
+// })
+// app.get("/follow1/:id",isloggedin,async(req,res)=>{
+//     let loggedinuser = await usermodel.findOne({_id:req.user.userid});
+//     let user = await usermodel.findOne({_id:req.params.id}).populate("post"); 
+//     if(loggedinuser.followings.indexOf(req.params.id)===-1){
+//         loggedinuser.followings.push(user._id);
+//         user.followers.push(loggedinuser._id);
+//         await loggedinuser.save();
+//         await user.save();
+//     }
+//     else{
+//         loggedinuser.followings.splice(loggedinuser.followings.indexOf(user._id),1);
+//         user.followers.splice(user.followers.indexOf(loggedinuser._id),1);
+//         await loggedinuser.save();
+//         await user.save();
+//     }
+//     console.log(`follow details: loggedin user: ${loggedinuser} , user: ${user}`);
+//     res.redirect("/first");
     
-})
+// })
 
 
 
-app.get("/profile",isloggedin,async(req,res)=>{
-    let user=await usermodel.findOne({email:req.user.email});
+// app.get("/profile",isloggedin,async(req,res)=>{
+//     let user=await usermodel.findOne({email:req.user.email});
 
-    //data association: fetching out data of post array's id from userpost
-    await user.populate("post");
-    res.render("profile",{user});
-})
+//     //data association: fetching out data of post array's id from userpost
+//     await user.populate("post");
+//     res.render("profile",{user});
+// })
 
-app.get("/viewing/:email",isloggedin,async(req,res)=>{
-    let loggedinuser=await usermodel.findOne({email:req.user.email});
-    let user= await usermodel.findOne({email:req.params.email});
-    await user.populate("post");
-    if(loggedinuser.email===user.email)res.render("profile",{user});
-    else res.render("visitprofile",{user,loggedinuser});
-})
+// app.get("/viewing/:email",isloggedin,async(req,res)=>{
+//     let loggedinuser=await usermodel.findOne({email:req.user.email});
+//     let user= await usermodel.findOne({email:req.params.email});
+//     await user.populate("post");
+//     if(loggedinuser.email===user.email)res.render("profile",{user});
+//     else res.render("visitprofile",{user,loggedinuser});
+// })
 
-app.get("/first",isloggedin,async(req,res)=>{
-    let posts=await userpost.find().populate("user");
-    let user= await usermodel.findOne({email:req.user.email});
-    res.render("first",{posts,user})
-})
+// app.get("/first",isloggedin,async(req,res)=>{
+//     let posts=await userpost.find().populate("user");
+//     let user= await usermodel.findOne({email:req.user.email});
+//     res.render("first",{posts,user})
+// })
 
 
 

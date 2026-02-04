@@ -32,7 +32,7 @@
   <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
     <h1 class="text-3xl font-brand text-primary">Blogsy</h1>
     <div class="flex gap-4 items-center">
-      <a href="/first" class="text-zinc-400 hover:text-primary transition">Home</a>
+      <a href="/users/first" class="text-zinc-400 hover:text-primary transition">Home</a>
       <a href="/auth/logout" class="bg-red-500/90 hover:bg-red-600 px-4 py-2 rounded-xl text-sm transition">
         Logout
       </a>
@@ -70,7 +70,7 @@
     <!-- Follow Button -->
     <div>
       <a
-        href="/follow/<%= user._id %>"
+        href="/users/follow/<%= user._id %>"
         class="<%= user.followers.indexOf(loggedinuser._id)===-1
           ? 'bg-primary text-white'
           : 'border border-primary text-primary' %>
