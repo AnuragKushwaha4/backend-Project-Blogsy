@@ -4,7 +4,7 @@ const cookieParser = require("cookie-parser");
 const bcrypt=require("bcrypt");
 const jwt=require("jsonwebtoken");
 const userpost = require("./Models/userpost");
-const upload=require("./Config/multer");
+
 const path=require("path");
 const {isloggedin}=require("./Middleware/authorization")
 const authRoute=require('./Routes/AuthRoute')
@@ -45,6 +45,23 @@ app.get("/edit/:id",isloggedin,async(req,res)=>{
 app.get("/change",(req,res)=>{
     res.render("imageUpdate");
 })
+
+
+
+app.get("/login",(req,res)=>{
+    res.render("Login");
+})
+app.get("/delete",isloggedin,async(req,res)=>{
+    //const users=await usermodel.findOne({email:req.user.email});
+    //users.followers.splice(0,users.followers.length);
+    //await users.save();
+    //res.send({users});
+})
+
+app.get('/',(req,res)=>{
+    res.render("register");
+})
+
 
 // app.post("/edit/:id",isloggedin,async(req,res)=>{
 //     await userpost.findOneAndUpdate({_id:req.params.id},{content:req.body.content},{new:true});
@@ -151,6 +168,9 @@ app.get("/follow1/:id",isloggedin,async(req,res)=>{
     res.redirect("/first");
     
 })
+
+
+
 app.get("/profile",isloggedin,async(req,res)=>{
     let user=await usermodel.findOne({email:req.user.email});
 
@@ -203,21 +223,6 @@ app.get("/first",isloggedin,async(req,res)=>{
 //     })
 // })
 
-
-
-app.get("/login",(req,res)=>{
-    res.render("Login");
-})
-app.get("/delete",isloggedin,async(req,res)=>{
-    //const users=await usermodel.findOne({email:req.user.email});
-    //users.followers.splice(0,users.followers.length);
-    //await users.save();
-    //res.send({users});
-})
-
-app.get('/',(req,res)=>{
-    res.render("register");
-})
 
 
 // app.post("/register", async(req,res)=>{

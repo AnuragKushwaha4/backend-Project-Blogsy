@@ -1,3 +1,4 @@
+const upload = require("../Config/multer");
 const usermodel = require("../Models/usermodel")
 const userpost = require("../Models/userpost")
 
@@ -47,3 +48,30 @@ async function Upload(req,res){
     await user.save();
     res.redirect("/profile")
 }
+
+
+async function ViewProfile(req,res){
+    let user = await usermodel.findOne({_id:req.user.userid});
+    await user.populate("post");
+    res.render("profile",{user});
+}
+
+async function ViewOthersProfile(req,res){
+    let user = await usermodel.findOne({email:req.params.email});
+    let loggedinuser = await usermodel.findOne({_id:req.user.userid});
+    await user.populate("post");
+    if(loggedinuser._id===user._id)res.render("profile",{user});
+    res.render("visitprofile",{user,loggedinuser});
+}
+
+
+async function FirstInterfaceView(req,res){
+    let user = await usermodel.findOne({_id:req.user.userid});
+    let posts = await userpost.find();
+    await posts.populate("user");
+    res.render("first",{user,posts})
+}
+
+
+
+module.exports ={FirstInterfaceView,ViewOthersProfile,ViewProfile,Follow,Follow1,Upload}
