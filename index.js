@@ -1,10 +1,6 @@
 const express = require("express");
-const usermodel=require("./Models/usermodel");
 const cookieParser = require("cookie-parser");
-const bcrypt=require("bcrypt");
-const jwt=require("jsonwebtoken");
 const userpost = require("./Models/userpost");
-
 const path=require("path");
 const {isloggedin}=require("./Middleware/authorization")
 const authRoute=require('./Routes/AuthRoute')
@@ -24,17 +20,6 @@ app.use("/auth",authRoute)
 app.use("/posts",isloggedin,postRoute)
 app.use("/users",isloggedin,userRoute)
 
-//const isloggedin=(req,res,next)=>{
-//     if(!req.cookies.token){
-//         res.status(500).render("Login");
-//     }
-//     else{
-//         const data = jwt.verify(req.cookies.token,"secret");
-//         req.user= data;
-//         console.log(req.user);
-//         next();
-//     }
-// }
 
 
 
@@ -53,16 +38,35 @@ app.get("/change",(req,res)=>{
 app.get("/login",(req,res)=>{
     res.render("Login");
 })
-app.get("/delete",isloggedin,async(req,res)=>{
-    //const users=await usermodel.findOne({email:req.user.email});
-    //users.followers.splice(0,users.followers.length);
-    //await users.save();
-    //res.send({users});
-})
+
+
+
 
 app.get('/',(req,res)=>{
     res.render("register");
 })
+
+
+app.listen(3000);
+
+// app.get("/delete",isloggedin,async(req,res)=>{
+//     const users=await usermodel.findOne({email:req.user.email});
+//     users.followers.splice(0,users.followers.length);
+//     await users.save();
+//     res.send({users});
+// })
+
+//const isloggedin=(req,res,next)=>{
+//     if(!req.cookies.token){
+//         res.status(500).render("Login");
+//     }
+//     else{
+//         const data = jwt.verify(req.cookies.token,"secret");
+//         req.user= data;
+//         console.log(req.user);
+//         next();
+//     }
+// }
 
 
 // app.post("/edit/:id",isloggedin,async(req,res)=>{
@@ -244,5 +248,3 @@ app.get('/',(req,res)=>{
 //    })
 
 // })
-
-app.listen(3000);
