@@ -4,7 +4,7 @@ const userpost = require("../Models/userpost")
 async function EditPost(req,res){
     await userpost.findOneAndUpdate({_id:req.params.id},{content:req.body.content},{new:true});
     //await userpost.save();
-    res.redirect("/profile");
+    res.redirect("/users/profile");
 }
 
 async function NewPost(req,res){
@@ -20,7 +20,7 @@ async function NewPost(req,res){
     user.post.push(newpost._id);
 
     await user.save();
-    res.redirect("/profile")
+    res.redirect("/users/profile")
 }
 
 async function NewPost1(req,res){
@@ -34,7 +34,7 @@ async function NewPost1(req,res){
     
         user.post.push(newpost._id);
         await user.save();
-        res.redirect("/first")
+        res.redirect("/users/first")
 }
 
 async function LikePost(req,res){
@@ -44,8 +44,8 @@ async function LikePost(req,res){
     if(post.likes.indexOf(req.user.userid)===-1)post.likes.push(req.user.userid);
     else post.likes.splice(post.likes.indexOf(req.user.userid),1);
     await post.save();
-    if(post.user.email===req.user.email)res.redirect("/profile");
-    res.redirect(`/viewing/${post.user.email}`)
+    if(post.user.email===req.user.email)res.redirect("/users/profile");
+    res.redirect(`/users/viewing/${post.user.email}`)
 }
 
 async function LikePost1(req,res){
@@ -55,7 +55,7 @@ async function LikePost1(req,res){
     if(post.likes.indexOf(req.user.userid)===-1)post.likes.push(req.user.userid);
     else post.likes.splice(post.likes.indexOf(req.user.userid),1);
     await post.save();
-    res.redirect("/first");
+    res.redirect("/users/first");
 }
 
 

@@ -72,17 +72,7 @@
     </div>
 
     <!-- FOLLOW BUTTON (FIXED) -->
-    <div class="mt-4 md:mt-0">
-      <a
-        href="/users/follow/<%= user._id %>"
-        class="<%= user.followers.indexOf(user._id) === -1
-          ? 'bg-primary text-white'
-          : 'border border-primary text-primary' %>
-        px-6 py-2 rounded-full font-medium
-        transition transform hover:scale-105 active:scale-95">
-        <%= user.followers.indexOf(user._id) === -1 ? 'Follow' : 'Following' %>
-      </a>
-    </div>
+    
 
   </div>
 </section>
