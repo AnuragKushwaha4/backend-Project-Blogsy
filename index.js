@@ -39,6 +39,11 @@ app.get("/edit/:id",isloggedin,async(req,res)=>{
     res.render("edit",{post:post});
 
 })
+
+app.get("/change",(req,res)=>{
+    res.render("imageUpdate");
+})
+
 // app.post("/edit/:id",isloggedin,async(req,res)=>{
 //     await userpost.findOneAndUpdate({_id:req.params.id},{content:req.body.content},{new:true});
 //     await user.save();
@@ -78,10 +83,6 @@ app.get("/edit/:id",isloggedin,async(req,res)=>{
 
 
 
-
-app.get("/change",(req,res)=>{
-    res.render("imageUpdate");
-})
 
 app.post("/upload",isloggedin,upload.single("image"),async (req,res)=>{
     let user= await usermodel.findOne({email:req.user.email});
