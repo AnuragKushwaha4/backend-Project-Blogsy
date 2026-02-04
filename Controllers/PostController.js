@@ -42,7 +42,7 @@ async function LikePost(req,res){
     await post.populate("user");
 
     if(post.likes.indexOf(req.user.userid)===-1)post.likes.push(req.user.userid);
-    else post.likes.splice(req.user.userid,1);
+    else post.likes.splice(post.likes.indexOf(req.user.userid),1);
     await post.save();
     if(post.user.email===req.user.email)res.redirect("/profile");
     res.redirect(`/viewing/${post.user.email}`)
@@ -53,7 +53,7 @@ async function LikePost1(req,res){
     await post.populate("user");
 
     if(post.likes.indexOf(req.user.userid)===-1)post.likes.push(req.user.userid);
-    else post.likes.splice(req.user.userid,1);
+    else post.likes.splice(post.likes.indexOf(req.user.userid),1);
     await post.save();
     res.redirect("/first");
 }

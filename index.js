@@ -20,6 +20,8 @@ app.use(express.static(path.join(__dirname,"public")))
 
 app.use("/auth",authRoute)
 app.use("/posts",isloggedin,postRoute)
+
+
 //const isloggedin=(req,res,next)=>{
 //     if(!req.cookies.token){
 //         res.status(500).render("Login");
@@ -80,21 +82,6 @@ app.get("/change",(req,res)=>{
 // })
 
 
-
-
-
-
-app.post("/upload",isloggedin,upload.single("image"),async (req,res)=>{
-    let user= await usermodel.findOne({email:req.user.email});
-    user.profileImage = req.file.filename;
-    await user.save();
-    res.redirect("profile")
-    
-})
-
-
-
-
 // app.get("/like1/:id",isloggedin,async(req,res)=>{
 //     let post=await userpost.findOne({_id:req.params.id});
 //     if(post.likes.indexOf(req.user.userid)===-1)post.likes.push(req.user.userid);
@@ -113,6 +100,18 @@ app.post("/upload",isloggedin,upload.single("image"),async (req,res)=>{
 //     if(post.user.email===req.user.email)res.redirect('/profile');
 //     else res.redirect(`/viewing/${post.user.email}`);
 // })
+
+
+
+
+app.post("/upload",isloggedin,upload.single("image"),async (req,res)=>{
+    let user= await usermodel.findOne({email:req.user.email});
+    user.profileImage = req.file.filename;
+    await user.save();
+    res.redirect("profile")
+    
+})
+
 
 app.get("/follow/:id",isloggedin,async(req,res)=>{
     let loggedinuser = await usermodel.findOne({_id:req.user.userid});
@@ -209,6 +208,16 @@ app.get("/first",isloggedin,async(req,res)=>{
 app.get("/login",(req,res)=>{
     res.render("Login");
 })
+app.get("/delete",isloggedin,async(req,res)=>{
+    //const users=await usermodel.findOne({email:req.user.email});
+    //users.followers.splice(0,users.followers.length);
+    //await users.save();
+    //res.send({users});
+})
+
+app.get('/',(req,res)=>{
+    res.render("register");
+})
 
 
 // app.post("/register", async(req,res)=>{
@@ -231,15 +240,5 @@ app.get("/login",(req,res)=>{
 //    })
 
 // })
-app.get("/delete",isloggedin,async(req,res)=>{
-    //const users=await usermodel.findOne({email:req.user.email});
-    //users.followers.splice(0,users.followers.length);
-    //await users.save();
-    //res.send({users});
-})
-
-app.get('/',(req,res)=>{
-    res.render("register");
-})
 
 app.listen(3000);
