@@ -8,3 +8,4 @@ router.get("/login",LoginCard);
 router.get("/change",isloggedin,ProfileImageChangeCard);
 router.get("/edit/:id",isloggedin,EditPostCard)
 
+module.exports = router;

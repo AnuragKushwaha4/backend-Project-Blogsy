@@ -1,14 +1,15 @@
 const express = require("express");
 const cookieParser = require("cookie-parser");
-const userpost = require("./Models/userpost");
 const path=require("path");
+
 const {isloggedin}=require("./Middleware/authorization")
 const authRoute=require('./Routes/AuthRoute')
 const postRoute = require("./Routes/PostRoute")
 const userRoute = require("./Routes/UserRoute")
-
+const staticRoute = require("./Routes/StaticRoute")
 
 const app=express();
+
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 app.set("view engine","ejs");
@@ -19,35 +20,35 @@ app.use(express.static(path.join(__dirname,"public")))
 app.use("/auth",authRoute)
 app.use("/posts",isloggedin,postRoute)
 app.use("/users",isloggedin,userRoute)
-
-
-
-
-app.get("/edit/:id",isloggedin,async(req,res)=>{
-    let post=await userpost.findOne({_id:req.params.id});
-    res.render("edit",{post:post});
-
-})
-
-app.get("/change",(req,res)=>{
-    res.render("imageUpdate");
-})
-
-
-
-app.get("/login",(req,res)=>{
-    res.render("Login");
-})
-
-
-
-
-app.get('/',(req,res)=>{
-    res.render("register");
-})
-
+app.use("/",staticRoute)
 
 app.listen(3000);
+
+// app.get("/edit/:id",isloggedin,async(req,res)=>{
+//     let post=await userpost.findOne({_id:req.params.id});
+//     res.render("edit",{post:post});
+
+// })
+
+// app.get("/change",(req,res)=>{
+//     res.render("imageUpdate");
+// })
+
+
+
+// app.get("/login",(req,res)=>{
+//     res.render("Login");
+// })
+
+
+
+
+// app.get('/',(req,res)=>{
+//     res.render("register");
+// })
+
+
+
 
 // app.get("/delete",isloggedin,async(req,res)=>{
 //     const users=await usermodel.findOne({email:req.user.email});
